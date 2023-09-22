@@ -66,8 +66,17 @@ public class PlatoDAO {
         return platos;
     }
     
-    public void addPlato(){
+    public void addPlato(Plato p, Plato c){
         
+        try {
+            con = DBConexion.getConexion();
+            String sql = "INSERT INTO PLATO(nombre, codCat) values (?, ?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1,p.getNombre());
+            ps.setInt(2, c.getCodCat());
+            ResultSet rs = ps.executeQuery();
+        } catch (SQLException e) {
+        }
     }
 
     public void deltePlato(){
@@ -77,6 +86,9 @@ public class PlatoDAO {
     public void modifyPlato(){
         
     }
+    
+    
+    /// METODOS DE CATEGORIAS DE PLATOS
     
     public List<Plato> listarCategorias() {
         List<Plato> categorias = new ArrayList<>();
