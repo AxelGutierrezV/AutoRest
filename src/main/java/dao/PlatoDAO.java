@@ -48,7 +48,7 @@ public class PlatoDAO {
         try {
             con = DBConexion.getConexion();
             String sql = "call PlatosConCategorias";
-            PreparedStatement st = con.prepareStatement(sql);
+            PreparedStatement st = con.prepareCall(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 p = new Plato();

@@ -69,15 +69,14 @@
                     <table class="table table-bordered">
                         <th>Codigo de Plato<th>Plato<th>Categoria 
                             <%
-                                for(Plato p:obj.listaPlatosConCategoria() ){
-                                    out.print("<tr><td>"+ p.getCodPlato());
+                                for (Plato p : obj.listaPlatosConCategoria()) {
+                                    out.print("<tr><td>" + p.getCodPlato() + "<td>" + p.getNombre() + "<td>" + p.getCatNombre());
                                 }
-                                %>
+                            %>
                     </table>
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">...</div>
             </div>
         </div>
-
     </body>
 </html>
