@@ -30,7 +30,7 @@ public class DBConexion {
         Connection con = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost/AUTOREST";
+            String url = "jdbc:mysql://localhost/autorest2";
             String usr = "root";
             String psw = "";
             con = DriverManager.getConnection(url, usr, psw);

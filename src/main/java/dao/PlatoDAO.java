@@ -42,6 +42,25 @@ public class PlatoDAO {
         }
         return platos;
     }
+        public List<Plato> listaPlatosConCategoria() {
+        List<Plato> platos = new ArrayList<>();
+        Plato p;
+        try {
+            con = DBConexion.getConexion();
+            String sql = "call PlatosConCategorias";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                p = new Plato();
+                p.setCodPlato(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                p.setCatNombre(rs.getString(3));
+                platos.add(p);
+            }
+        } catch (Exception e) {
+        }
+        return platos;
+    }
     
         public List<Plato> listaPlatosPorCategoria(int codCat) {
         List<Plato> platos = new ArrayList<>();
