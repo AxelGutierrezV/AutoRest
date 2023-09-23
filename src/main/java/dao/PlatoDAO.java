@@ -33,9 +33,10 @@ public class PlatoDAO {
                 p = new Plato();
                 p.setCodPlato(rs.getInt(1));
                 p.setNombre(rs.getString(2));
-                p.setCodCat(rs.getInt(3));
-                p.setEstado(rs.getString(4));
-                p.setImagen(rs.getString(5));
+                p.setPrecio(rs.getDouble(3));
+                p.setCodCat(rs.getInt(4));
+                p.setEstado(rs.getString(5));
+                p.setImagen(rs.getString(6));
                 platos.add(p);
             }
         } catch (Exception e) {
@@ -54,7 +55,8 @@ public class PlatoDAO {
                 p = new Plato();
                 p.setCodPlato(rs.getInt(1));
                 p.setNombre(rs.getString(2));
-                p.setCatNombre(rs.getString(3));
+                p.setPrecio(rs.getDouble(3));
+                p.setCatNombre(rs.getString(4));
                 platos.add(p);
             }
         } catch (Exception e) {
@@ -98,7 +100,8 @@ public class PlatoDAO {
         }
     }
 
-    public void deltePlato(){
+    public void deletePlato(int CodPlato){
+        String sql = "DELTE FROM PLATO WHERE cod";
         
     }
     

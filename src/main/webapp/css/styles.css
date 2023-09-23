@@ -1,0 +1,19 @@
+.cabecera{
+    background-color: rgb(255, 227, 142);
+    --bs-navbar-padding-y: 0.5rem;
+}
+
+.navbarPrincipal{
+    text-align: right;
+}
+
+.textoCabecera{
+    font-size: 18px;
+    justify-content: flex-end;
+    padding-right: 50px;
+}
+
+.table-centered{
+    width: 50%;
+}
+

@@ -5,13 +5,13 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import = "dao.PlatoDAO, modelo.Plato" %>
+<%@page import = "dao.EmpleadoDAO, modelo.Empleado" %>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Platos</title>
+        <title>Empleados</title>
         <link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -47,8 +47,8 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-current="page" aria-expanded="false">Administración</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="nav-link" href="empleados.jsp">Empleados</a></li>
-                                    <a class="nav-link active" aria-current="page" href="platos.jsp">Platos</a>
+                                    <li><a class="nav-link active"  aria-current="page" href="#">Empleados</a></li>
+                                    <a class="nav-link" href="platos.jsp">Platos</a>
                                 </ul>
                             </li>
                         </ul>
@@ -58,26 +58,26 @@
             </nav>
         </header>
         <%
-            PlatoDAO obj = new PlatoDAO();
+            EmpleadoDAO obj = new EmpleadoDAO();
         %>
         <div>
-            <button type="button" class="btn btn-primary btn-sm">Agregar Plato</button>
-            <button type="button" class="btn btn-primary btn-sm">Agregar Categoria</button>
+            <button type="button" class="btn btn-primary btn-sm">Nuevo Empleado</button>
+            <button type="button" class="btn btn-primary btn-sm">Nuevo Perfil</button>
         </div>
         <div>
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Platos</button>
-                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Categorias</button>
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Empleados</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Perfiles</button>
                 </div>
             </nav>
-            <div class="tab-content" id="nav-tabContent">
+            <div id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                     <table class="table table-bordered">
-                        <th>Codigo de Plato<th>Plato<th>Precio<th>Categoria 
+                        <th>Codigo de Empleado<th>Nombre<th>Estado<th>Cargo 
                             <%
-                                for (Plato p : obj.listaPlatosConCategoria()) {
-                                    out.print("<tr><td>" + p.getCodPlato() + "<td>" + p.getNombre() + "<td>" +p.getPrecio() + "<td>" + p.getCatNombre());
+                                for (Empleado e : obj.empleados()) {
+                                    out.print("<tr><td>" + e.getCodEmpleado() + "<td>" + e.getNombre() + " " + e.getApellido() + "<td>" + e.estadoNombre() + "<td>" + e.getPerfil());
                                 }
                             %>
                     </table>
@@ -86,15 +86,11 @@
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                         <table class="table table-bordered">
                             <th>Codigo<th>Categoria 
-                                <%
-                                    for (Plato p : obj.listarCategorias()) {
-                                        out.print("<tr><td>" + p.getCodCat() + "<td>" + p.getCatNombre() + "<td>"); %>
+                               
                                 <button class="btn-outline-primary">editar</button>
-                            
+                            <td style="width: 10%;align-content: flex-end">
                                 <button class="btn-danger">eliminar</button>
-                                <%
-                                    }
-                                %>
+                                
                         </table>
                     </div>
                 </div>

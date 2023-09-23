@@ -12,6 +12,7 @@ public class Plato {
     private int CodPlato;
     private String nombre;
     private String estado;
+    private double precio;
     private String imagen;
     private int CodCat;
     private String CatNombre; 
@@ -39,6 +40,14 @@ public class Plato {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public String getEstado() {
