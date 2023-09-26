@@ -30,7 +30,7 @@
                                 <a class="nav-link active" aria-current="page" href="#">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#">Ordenes</a>
+                                <a class="nav-link" aria-current="page" href="Ordenes.jsp">Ordenes</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Comandas</a>
@@ -40,6 +40,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="empleados.jsp">Empleados</a></li>
                                     <li><a class="dropdown-item" href="platos.jsp">Platos</a></li>
+                                    <li><a class="dropdown-item" href="mesas.jsp">Mesas</a></li>
                                 </ul>
                             </li>
 
