@@ -56,6 +56,6 @@
                 </div>
             </nav>
         </header>
-        
+        <h1>AQUI COLOCAR LA LISTA DE MESAS PARA SU ADMINISTRACION</h1>
     </body>
 </html>

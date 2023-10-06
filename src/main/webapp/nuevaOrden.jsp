@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dao.PlatoDAO, modelo.Plato"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -58,40 +59,60 @@
             </nav>
         </header>
         <form>
-            seleccionar mesa<br>
-            añadir platos<br>
-            enviar<br>
+
         </form>
+        <%
+            PlatoDAO obj = new PlatoDAO();
+        %>
+        <br><center><h2>Seleccion de platos</h2></center><br>
+        <div class ="row">
+            <div class="col-sm-9">
+                <nav>
+                    <div class="nav nav-pills" id="nav-tab" role="tablist">
+                        <%
+                            for (Plato p : obj.listarCategorias()) {
+                                out.print("<button class=\"nav-link\" id=\"nav-"
+                                            + p.getCatNombre() + "-tab\" data-bs-toggle=\"tab\" data-bs-target=\"#nav-" + p.getCatNombre()
+                                            + "\" type=\"button\" role=\"tab\" aria-controls=\"nav-home\" aria-selected=\"true\">" + p.getCatNombre() + "</button>");
+                            }
+                        %>
 
-
-        <div>
-            <nav>
-                <div class="nav nav-pills" id="nav-tab" role="tablist">
-                    <button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">BRASA</button>
-                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Perfiles</button>
-                </div>
-            </nav>
-            <div id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                    <table class="table table-bordered">
-                        <th>Codigo de Empleado<th>Nombre<th>Estado<th>Cargo 
-                            
-                    </table>
-                </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                        <table class="table table-bordered">
-                            <th>Codigo<th>Categoria 
-
-                                <button class="btn-outline-primary">editar</button>
-                            <td style="width: 10%;align-content: flex-end">
-                                <button class="btn-danger">eliminar</button>
-
-                        </table>
                     </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <%
+                        for (Plato p : obj.listarCategorias()) {
+                            out.print("<div class=\"tab-pane fade\" id=\"nav-" + p.getCatNombre()
+                                        + "\" role=\"tabpanel\" aria-labelledby=\"nav-" + p.getCatNombre() + "-tab\" tabindex=\"0\">");
+
+                            out.print("<table class=\"table table-bordered\">");
+                            out.print("<tr><th>Codigo de Plato<th>Nombre<th>Precio<th>");
+                    %>
+
+                    <%
+                        for (Plato pl : obj.listaPlatosPorCategoria(p.getCodCat())) {
+                            out.print("<tr><td class=\"col-sm-2\">" + pl.getCodPlato() + "<td>" + pl.getNombre() + "<td>" + pl.getPrecio() + "<td>");
+                    %>
+                    <center><button class="btn-success">+</button></center>
+                        <%
+                            }
+                        %>
+                        <%
+                                out.print("</table>");
+                                out.print("</div>");
+                            }
+                        %>
                 </div>
             </div>
-        </div>
+            <div class="col-sm-3">
+                <h4>Detalle de Orden</h4>
+                <table class="table table-bordered">
+                    <tr><th>Plato<th>Cantidad<th>Precio</tr> 
+                </table>
+                <br>codigo para añadir platos
 
+
+            </div>
+        </div>
     </body>
 </html>

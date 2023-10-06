@@ -43,9 +43,32 @@ public class PlatoDAO {
         }
         return platos;
     }
-        public List<Plato> listaPlatosConCategoria() {
+
+    public List<Plato> listaPlatosPorCategoria(int codigo) {
         List<Plato> platos = new ArrayList<>();
         Plato p;
+        try {
+            con = DBConexion.getConexion();
+            String sql = "call PlatosPorCategoria(?)";
+            PreparedStatement st = con.prepareCall(sql);
+            st.setInt(1, codigo);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                p = new Plato();
+                p.setCodPlato(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                p.setPrecio(rs.getDouble(3));
+                platos.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return platos;
+    }
+
+    public List<Plato> listaPlatosConCategoria() {
+        List<Plato> platos = new ArrayList<>();
+        Plato p;
+        //por arreglar
         try {
             con = DBConexion.getConexion();
             String sql = "call PlatosConCategorias";
@@ -63,55 +86,30 @@ public class PlatoDAO {
         }
         return platos;
     }
-    
-        public List<Plato> listaPlatosPorCategoria(int codCat) {
-        List<Plato> platos = new ArrayList<>();
-        Plato p;
-        try {
-            con = DBConexion.getConexion();
-            String sql = "Select * from Plato where CodCat = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, codCat);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                p = new Plato();
-                p.setCodPlato(rs.getInt(1));
-                p.setNombre(rs.getString(2));
-                p.setCodCat(rs.getInt(3));
-                p.setEstado(rs.getString(4));
-                p.setImagen(rs.getString(5));
-                platos.add(p);
-            }
-        } catch (Exception e) {
-        }
-        return platos;
-    }
-    
-    public void addPlato(Plato p, Plato c){
-        
+
+    public void addPlato(Plato p, Plato c) {
+
         try {
             con = DBConexion.getConexion();
             String sql = "INSERT INTO PLATO(nombre, codCat) values (?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1,p.getNombre());
+            ps.setString(1, p.getNombre());
             ps.setInt(2, c.getCodCat());
             ResultSet rs = ps.executeQuery();
         } catch (SQLException e) {
         }
     }
 
-    public void deletePlato(int CodPlato){
+    public void deletePlato(int CodPlato) {
         String sql = "DELTE FROM PLATO WHERE cod";
-        
+
     }
-    
-    public void modifyPlato(){
-        
+
+    public void modifyPlato() {
+
     }
-    
-    
+
     /// METODOS DE CATEGORIAS DE PLATOS
-    
     public List<Plato> listarCategorias() {
         List<Plato> categorias = new ArrayList<>();
         String sql = "select * from Categoria_plato";

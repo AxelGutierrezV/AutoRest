@@ -15,8 +15,8 @@ public class Orden {
     int CodMesa;
     char Estado;
     Date Creacion; //por revisar si el tipo de dato funciona bien
-    ArrayList<Plato> platos;
-    public static ArrayList<Orden> ordenes;
+    ArrayList<ArrayList<Object>> platos;
+    public static ArrayList<Orden> ordenes = new ArrayList<>();
 
     public Orden(){
         platos = new ArrayList<>();
@@ -61,8 +61,5 @@ public class Orden {
         this.Creacion = Creacion;
     }
 
-    public ArrayList<Plato> getPlatos() {
-        return platos;
-    }
     
 }

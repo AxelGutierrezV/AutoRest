@@ -18,7 +18,8 @@ import modelo.Empleado;
  * @author Axel
  */
 public class EmpleadoDAO {
-    public List<Empleado> empleados(){
+
+    public List<Empleado> empleados() {
         List<Empleado> empleados = new ArrayList<>();
         Connection con = DBConexion.getConexion();
         Empleado emp;
@@ -26,7 +27,7 @@ public class EmpleadoDAO {
             String sql = "call ListaEmpleados";
             PreparedStatement ps = con.prepareCall(sql);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 emp = new Empleado();
                 emp.setCodEmpleado(rs.getInt(1));
                 emp.setNombre(rs.getString(2));
@@ -35,9 +36,38 @@ public class EmpleadoDAO {
                 emp.setPerfil(rs.getString(5));
                 empleados.add(emp);
             }
-            
+
         } catch (SQLException e) {
         }
         return empleados;
     }
+
+    public void addEmpleado() {
+    }
+
+    public void modifyEmpleado() {
+    }
+
+    public void deleteEmpleado() {
+    }
+
+    public List<Empleado> PerfilesEmpleados() {
+        List<Empleado> perfiles = new ArrayList<>();
+        Connection con = DBConexion.getConexion();
+        Empleado perfil;
+        try {
+            String sql = "select * from perfil_empleado";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                perfil = new Empleado();
+                perfil.setCodPerfil(rs.getInt(1));
+                perfil.setPerfil(rs.getString(2));
+                perfiles.add(perfil);
+            }
+        } catch (SQLException e) {
+        }
+        return perfiles;
+    }
 }
+

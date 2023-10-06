@@ -74,7 +74,7 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                     <table class="table table-bordered">
-                        <th>Codigo de Plato<th>Plato<th>Precio<th>Categoria 
+                        <th class="col-sm-1">Codigo de Plato<th>Plato<th>Precio<th>Categoria 
                             <%
                                 for (Plato p : obj.listaPlatosConCategoria()) {
                                     out.print("<tr><td>" + p.getCodPlato() + "<td>" + p.getNombre() + "<td>" +p.getPrecio() + "<td>" + p.getCatNombre());
@@ -83,7 +83,6 @@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                         <table class="table table-bordered">
                             <th>Codigo<th>Categoria 
                                 <%
