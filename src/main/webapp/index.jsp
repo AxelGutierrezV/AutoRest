@@ -45,7 +45,7 @@
                             </li>
 
                         </ul>
-                        <a href="login."><button class="btn btn-danger" type="submit">Cerrar Sesion</button></a>
+                        <a href="login.jsp"><button class="btn btn-danger" type="submit">Cerrar Sesion</button></a>
                     </div>
                 </div>
             </nav>

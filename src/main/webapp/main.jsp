@@ -51,7 +51,7 @@
                             </li>
 
                         </ul>
-                        <a href="login.php"><button class="btn btn-danger" type="submit">Cerrar Sesion</button></a>
+                        <a href="login.jsp"><button class="btn btn-danger" type="submit">Cerrar Sesion</button></a>
                     </div>
                 </div>
             </nav>

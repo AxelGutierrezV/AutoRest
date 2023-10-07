@@ -62,6 +62,8 @@
             EmpleadoDAO obj = new EmpleadoDAO();
         %>
         <div>
+            <a href="SvEmpleados?opc=1">Nuevo Empleado</a>
+            <a href="SvEmpleados?opc=2">Nuevo Perfil</a>
             <button type="button" class="btn btn-primary btn-sm">Nuevo Empleado</button>
             <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasAddPerfil" aria-controls="offCanvasAddrPerfil">Nuevo Perfil</button>
         </div>
