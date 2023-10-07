@@ -63,45 +63,80 @@
         %>
         <div>
             <button type="button" class="btn btn-primary btn-sm">Nuevo Empleado</button>
-            <button type="button" class="btn btn-primary btn-sm">Nuevo Perfil</button>
+            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasAddPerfil" aria-controls="offCanvasAddrPerfil">Nuevo Perfil</button>
         </div>
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Empleados</button>
-                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Perfiles</button>
-                </div>
-            </nav>
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                    <table class="table table-bordered">
-                        <th>Codigo de Empleado<th>Nombre<th>Estado<th>Cargo 
-                            <%
-                                for (Empleado e : obj.empleados()) {
-                                    out.print("<tr><td>" + e.getCodEmpleado() + "<td>" + e.getNombre() + " " + e.getApellido() + "<td>" + e.estadoNombre() + "<td>" + e.getPerfil() + "<td>");
-                                %>
-                                <button class="btn-outline-primary">editar</button>
-                                <button class="btn-danger">eliminar</button>
-                                <%
-                                    }
-                                %>
-                    </table>
-                </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                    <table class="table table-bordered">
-                        <tr><th>Codigo<th>Categoria<th> 
-                                <%
-                                    for (Empleado p : obj.PerfilesEmpleados()) {
-                                        out.print("<tr><td>" + p.getCodPerfil() + "<td>" + p.getPerfil() + "<td>");
-                                %>
-                                <button class="btn-outline-primary">editar</button>
-                                <button class="btn-danger">eliminar</button>
-                                <%
-                                    }
-                                %>
-
-
-                    </table>
-                </div>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Empleados</button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Perfiles</button>
             </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                <table class="table table-bordered">
+                    <th>Codigo de Empleado<th>Nombre<th>Estado<th>Cargo 
+                        <%
+                            for (Empleado e : obj.empleados()) {
+                                out.print("<tr><td>" + e.getCodEmpleado() + "<td>" + e.getNombre() + " " + e.getApellido() + "<td>" + e.estadoNombre() + "<td>" + e.getPerfil() + "<td>");
+                        %>
+                        <button class="btn-outline-primary">editar</button>
+                        <button class="btn-danger">eliminar</button>
+                        <%
+                            }
+                        %>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                <table class="table table-bordered">
+                    <tr><th>Codigo<th>Categoria<th> 
+                            <%
+                                for (Empleado p : obj.PerfilesEmpleados()) {
+                                    out.print("<tr><td>" + p.getCodPerfil() + "<td>" + p.getPerfil() + "<td>");
+                            %>
+                        <td>
+                            
+                            <form>
+                                <input type="hidden" name="codPerfil" value="<%= p.getCodPerfil()%>">
+                                <input type="submit" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasEditarPerfil" aria-controls="offCanvasEditarPerfil" value="Editar">
+                            </form>
+                        </td>
+
+                        <td>
+                            <a href="SvEmpleados?opc=3&nro=<% out.print(p.getCodPerfil());  %>" class="btn btn-default">delete</a> 
+                        </td> 
+                        <%
+                            }
+                        %>
+                </table>
+            </div>
+        </div>
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offCanvasEditarPerfil" aria-labelledby="offcanvasBottomLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Editar Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body small">
+                <form>
+                    <%
+                        Empleado pr = obj.getPerfilEmpleado(1);
+                        String i = request.getParameter("codPerfil");
+                        out.print("<input type=\"text\" value=\"" + i+ "\">");
+                    %>
+                    <a href="SvEmpleados?opc=4&nro=<% out.print(pr.getCodPerfil());%>" class="btn btn-default">Editar</a>  
+                </form>
+            </div>
+        </div>
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offCanvasAddPerfil" aria-labelledby="offcanvasBottomLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Añadir Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body small">
+                <form>
+                    AQUI VA EL FORMULARIO PARA AÑADIR PERFILES
+                    <input type="submit" value="enviar">
+                </form>
+            </div>
+        </div>
     </body>
 </html>

@@ -19,9 +19,10 @@ import modelo.Empleado;
  */
 public class EmpleadoDAO {
 
+    Connection con = DBConexion.getConexion();
+
     public List<Empleado> empleados() {
         List<Empleado> empleados = new ArrayList<>();
-        Connection con = DBConexion.getConexion();
         Empleado emp;
         try {
             String sql = "call ListaEmpleados";
@@ -53,7 +54,6 @@ public class EmpleadoDAO {
 
     public List<Empleado> PerfilesEmpleados() {
         List<Empleado> perfiles = new ArrayList<>();
-        Connection con = DBConexion.getConexion();
         Empleado perfil;
         try {
             String sql = "select * from perfil_empleado";
@@ -69,5 +69,69 @@ public class EmpleadoDAO {
         }
         return perfiles;
     }
-}
 
+    public Empleado getPerfilEmpleado(int CodPerfil){
+        Empleado p = new Empleado();
+                try {
+            String sql = "select * from perfil_empleado where codPerfil = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, CodPerfil);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Empleado();
+                p.setCodPerfil(rs.getInt(1));
+                p.setPerfil(rs.getString(2));
+            }
+        } catch (SQLException e) {
+        }
+        return p;
+    }
+    
+    public void addPerfil() {
+    }
+
+    public void modifyPerfil(String nombrePerfil, int CodPerfil) {
+        String sql = "update perfil_empleado set Cargo = ? where codPerfil = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1,nombrePerfil);
+            ps.setInt(2, CodPerfil);
+            ResultSet rs = ps.executeQuery();
+            } catch (SQLException e) {
+        }
+    }
+
+    public void deletePerfil(int codPerfil) {
+        //PENDIENTE POR USAR LA VALIDACIÓN
+        String sql = "delete from perfil_empleado where codPerfil = ?";
+        PreparedStatement ps;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, codPerfil);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
+    private boolean validarPerfilEnUso(int cod) {
+        int n = 200;
+        String sql = "select count(*) from empleado where codPerfil = ?";
+        PreparedStatement ps;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, cod);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                n = rs.getInt(1);
+                if (n == 0) {
+                    return false;
+                }
+                if (n >= 1) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+        }
+        return true;
+    }
+}
