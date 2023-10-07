@@ -87,29 +87,114 @@ public class PlatoDAO {
         return platos;
     }
 
-    public void addPlato(Plato p, Plato c) {
+    public int siguienteCodigoPlato() {
+        try {
+            con = DBConexion.getConexion();
+            String sql = "select max(CodPlato) + 1 from plato;";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return (rs.getInt(1));
+            }
+        } catch (Exception e) {
+        }
+        return -1;
+
+    }
+    //select max(CodPlato) + 1 from plato;
+
+    public Plato obtenerDatosPlato(int codPlato) {
+        String sql = "select nombre, CodPlato from plato where CodPlato = ?;";
+        PreparedStatement ps;
+        ResultSet rs;
+        Plato c = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, codPlato);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                c = new Plato();
+                c.setNombre(rs.getString(1));
+                c.setCodPlato(rs.getInt(2));
+            }
+        } catch (Exception e) {
+        }
+        return c;
+    }
+
+    public void addPlato(Plato p) {
 
         try {
             con = DBConexion.getConexion();
-            String sql = "INSERT INTO PLATO(nombre, codCat) values (?, ?)";
+            String sql = "INSERT INTO PLATO values (?, ?, ?, ?, ?, ?);";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, p.getNombre());
-            ps.setInt(2, c.getCodCat());
-            ResultSet rs = ps.executeQuery();
+            ps.setInt(1, p.getCodPlato());
+            ps.setString(2, p.getNombre());
+            ps.setDouble(3, p.getPrecio());
+            ps.setInt(4, p.getCodCat());
+            ps.setString(5, p.getEstado());
+            ps.setString(6, p.getImagen());
+            ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
 
     public void deletePlato(int CodPlato) {
-        String sql = "DELTE FROM PLATO WHERE cod";
+        String sql = "delete from plato where CodPlato = ?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, CodPlato);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
+    public void modifyPlato(String nombrePlato, int codPlato) {
+        String sql = "update plato set nombre = ? where CodPlato = ?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombrePlato);
+            ps.setInt(2, codPlato);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
+    /// ------------------------------------ METODOS DE CATEGORIAS DE PLATOS ------------------------------------
+    public List<Plato> listarNombresYCodigosDeCategorias() {
+        List<Plato> platosNombresYCodigosCategorias = new ArrayList<>();
+        Plato p;
+        try {
+            con = DBConexion.getConexion();
+            String sql = "select Nombre, CodCat from Categoria_plato;";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                p = new Plato();
+                p.setCatNombre(rs.getString(1));
+                p.setCodCat(rs.getInt(2));
+                platosNombresYCodigosCategorias.add(p);
+            }
+        } catch (Exception e) {
+        }
+        return platosNombresYCodigosCategorias;
+    }
+
+    public int siguienteCodigoCategoria() {
+        try {
+            con = DBConexion.getConexion();
+            String sql = "select max(CodCat) + 1 from Categoria_plato;";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return (rs.getInt(1));
+            }
+        } catch (Exception e) {
+        }
+        return -1;
 
     }
 
-    public void modifyPlato() {
-
-    }
-
-    /// METODOS DE CATEGORIAS DE PLATOS
     public List<Plato> listarCategorias() {
         List<Plato> categorias = new ArrayList<>();
         String sql = "select * from Categoria_plato";
@@ -128,23 +213,59 @@ public class PlatoDAO {
         return categorias;
     }
 
-    public void addCategoriaPlatos(Plato c) {
-        String sql = "insert into Categoria_plato (nombre) values (?)";
+    public Plato obtenerDatosCategoria(int codCat) {
+        String sql = "select * from Categoria_plato where CodCat = ?;";
+        PreparedStatement ps;
+        ResultSet rs;
+        Plato c = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, codCat);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                c = new Plato(rs.getInt(1), rs.getString(2));
+            }
+        } catch (Exception e) {
+        }
+        return c;
+    }
+
+    public void addCategoriaPlatos(Plato p) {
+        String sql = "insert into Categoria_plato values (?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, c.getCatNombre());
+            ps.setInt(1, p.getCodCat());
+            ps.setString(2, p.getCatNombre());
+            
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
 
     public void deleteCategoriaPlatos(int codCat) {
-        String sql = "DELETE FROM Categoria_plato WHERE CodCat = ?";
-        try {
+        String sql = "delete from plato where CodCat = ?;";
+        try {//
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, codCat);
+            ps.executeUpdate();
+            sql = "DELETE FROM Categoria_plato WHERE CodCat = ?;";
+            ps = con.prepareStatement(sql);
             ps.setInt(1, codCat);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
+
+    public void terminarEditarCategoria(String nombreCategoria, int codigoCategoria) {//Modifica solo nombre de categoría
+        String sql = "update Categoria_plato set Nombre = ?  where CodCat = ?;";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombreCategoria);
+            ps.setInt(2, codigoCategoria);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
 }
