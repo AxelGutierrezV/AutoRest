@@ -32,7 +32,7 @@ public class DBConexion {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost/autorest2";
             String usr = "root";
-            String psw = "";
+            String psw = "admin";
             con = DriverManager.getConnection(url, usr, psw);
             System.out.println("conexion ok");
         } catch (ClassNotFoundException ex) {
