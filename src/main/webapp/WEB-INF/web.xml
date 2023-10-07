@@ -16,6 +16,10 @@
         <servlet-name>SvMesas</servlet-name>
         <servlet-class>Control.SvMesas</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SvLogin</servlet-name>
+        <servlet-class>Control.SvLogin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Empleados</servlet-name>
         <url-pattern>/Empleados</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>SvMesas</servlet-name>
         <url-pattern>/SvMesas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SvLogin</servlet-name>
+        <url-pattern>/SvLogin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

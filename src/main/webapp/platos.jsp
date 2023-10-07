@@ -61,6 +61,9 @@
             PlatoDAO obj = new PlatoDAO();
         %>
         <div>
+            <a href="SvPlatos?opc=7">Agregar Plato</a>
+            <a href="SvPlatos?opc=9">Agregar Categoria Platos</a>
+
             <button type="button" class="btn btn-primary btn-sm">Agregar Plato</button>
             <button type="button" class="btn btn-primary btn-sm">Agregar Categoria</button>
         </div>
@@ -74,30 +77,33 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                     <table class="table table-bordered">
-                        <th class="col-sm-1">Codigo de Plato<th>Plato<th>Precio<th>Categoria 
+                        <th class="col-sm-1">Codigo de Plato<th>Plato<th>Precio<th>Categoria<th>Editar<th>Eliminar</th>
                             <%
                                 for (Plato p : obj.listaPlatosConCategoria()) {
-                                    out.print("<tr><td>" + p.getCodPlato() + "<td>" + p.getNombre() + "<td>" +p.getPrecio() + "<td>" + p.getCatNombre());
+                                    out.print("<tr><td>" + p.getCodPlato() + "<td>" + p.getNombre() + "<td>" + p.getPrecio() + "<td>" + p.getCatNombre());
+                            %>
+                        <td><a href="SvPlatos?opc=4&codigoPlato=<%=p.getCodPlato()%>">Editar</a></td>
+                        <td><a href="SvPlatos?opc=6&codigoPlato=<%=p.getCodPlato()%>">Eliminar</a></td>
+                        <%
+                            }
+                        %>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                    <table class="table table-bordered">
+                        <th>Codigo<th>Categoria 
+                            <%
+                                for (Plato p : obj.listarCategorias()) {
+                                    out.print("<tr><td>" + p.getCodCat() + "<td>" + p.getCatNombre() + "<td>");%>
+                            <a class="btn-outline-primary" href="SvPlatos?opc=1&codigoPlatoCategoria=<%=p.getCodCat()%>">Editar</a>
+                            <a class="btn-danger" href="SvPlatos?opc=2&codigoPlatoCategoria=<%=p.getCodCat()%>">Eliminar</a>
+                            <%
                                 }
                             %>
                     </table>
                 </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                        <table class="table table-bordered">
-                            <th>Codigo<th>Categoria 
-                                <%
-                                    for (Plato p : obj.listarCategorias()) {
-                                        out.print("<tr><td>" + p.getCodCat() + "<td>" + p.getCatNombre() + "<td>"); %>
-                                <button class="btn-outline-primary">editar</button>
-                            
-                                <button class="btn-danger">eliminar</button>
-                                <%
-                                    }
-                                %>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>

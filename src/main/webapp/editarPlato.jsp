@@ -4,6 +4,8 @@
     Author     : Axel
 --%>
 
+<%@page import="modelo.Plato"%>
+<%@page import="dao.PlatoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +14,18 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%
+            Plato plato = (Plato)request.getAttribute("plato");
+        %>
+        
+        <h1>Editar plato</h1>
+        <h2>Nombre del plato anterior: <%=plato.getNombre()%></h2>
+        
+        <form action="SvPlatos" method="post">
+            <input type="hidden" name="opc" value="5">
+            <input type="hidden" name="codigoPlato" value="<%=plato.getCodPlato()%>">
+            <label>Ingrese nombre del plato: </label> <input type="text" name="nombrePlato" required="true"><br><br>
+            <input type="submit" value="Modificar">
+        </form>
     </body>
 </html>
