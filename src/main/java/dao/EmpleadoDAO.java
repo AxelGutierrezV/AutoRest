@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.Empleado;
 
 /**
@@ -42,8 +43,40 @@ public class EmpleadoDAO {
         }
         return empleados;
     }
+    
+    public List<Empleado> listarPerfiles(){
+        List<Empleado> empleados = new ArrayList<>();
+        Empleado emp;
+        try {
+            String sql = "select * from perfil_empleado;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                emp = new Empleado();
+                emp.setCodPerfil(rs.getInt(1));
+                emp.setPerfil(rs.getString(2));
+                empleados.add(emp);
+            }
 
-    public void addEmpleado() {
+        } catch (SQLException e) {
+        }
+        return empleados;
+    }
+
+    public void addEmpleado(Empleado emp) {
+        try {
+            String sql = "INSERT INTO empleado VALUES (?, ?, ?, ?, ?, ?);";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, emp.getCodEmpleado());
+            ps.setString(2, emp.getNombre());
+            ps.setString(3, emp.getApellido());
+            ps.setString(4, emp.getPass());
+            ps.setInt(5, emp.getCodPerfil());
+            ps.setInt(6, emp.getEstado());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+        }
     }
 
     public void modifyEmpleado() {
