@@ -37,7 +37,9 @@ public class PlatoDAO {
                 p.setCodCat(rs.getInt(4));
                 p.setEstado(rs.getString(5));
                 p.setImagen(rs.getString(6));
-                platos.add(p);
+                if (p.getEstadoCategoria() == 1) {
+                    platos.add(p);
+                }
             }
         } catch (Exception e) {
         }
@@ -49,9 +51,8 @@ public class PlatoDAO {
         Plato p;
         try {
             con = DBConexion.getConexion();
-            String sql = "call PlatosPorCategoria(?)";
-            PreparedStatement st = con.prepareCall(sql);
-            st.setInt(1, codigo);
+            String sql = "select p.CodPlato,p.nombre,p.precio, c.Nombre, c.estado from plato p join categoria_plato c on c.CodCat=p.CodCat where c.estado = 1";
+            PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 p = new Plato();
@@ -71,7 +72,7 @@ public class PlatoDAO {
         //por arreglar
         try {
             con = DBConexion.getConexion();
-            String sql = "call PlatosConCategorias";
+            String sql = "select p.CodPlato,p.nombre,p.precio, c.Nombre, c.estado from plato p join categoria_plato c on c.CodCat=p.CodCat where c.estado = 1 and p.estado = 'A'";
             PreparedStatement st = con.prepareCall(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -80,6 +81,7 @@ public class PlatoDAO {
                 p.setNombre(rs.getString(2));
                 p.setPrecio(rs.getDouble(3));
                 p.setCatNombre(rs.getString(4));
+                p.setEstadoCategoria(rs.getInt(5));
                 platos.add(p);
             }
         } catch (Exception e) {
@@ -126,20 +128,27 @@ public class PlatoDAO {
 
         try {
             con = DBConexion.getConexion();
-            String sql = "INSERT INTO PLATO values (?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO PLATO values (?, ?, ?, ?, 1, ?);";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, p.getCodPlato());
             ps.setString(2, p.getNombre());
             ps.setDouble(3, p.getPrecio());
             ps.setInt(4, p.getCodCat());
-            ps.setString(5, p.getEstado());
-            ps.setString(6, p.getImagen());
+            ps.setString(5, p.getImagen());
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
 
     public void deletePlato(int CodPlato) {
+        String sql = "update plato set estado = 'I' where CodPlato = " + CodPlato;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+
+        /*
         String sql = "delete from plato where CodPlato = ?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -147,6 +156,7 @@ public class PlatoDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
         }
+         */
     }
 
     public void modifyPlato(String nombrePlato, int codPlato) {
@@ -173,7 +183,9 @@ public class PlatoDAO {
                 p = new Plato();
                 p.setCatNombre(rs.getString(1));
                 p.setCodCat(rs.getInt(2));
-                platosNombresYCodigosCategorias.add(p);
+                if (p.getEstadoCategoria() == 1) {
+                    platosNombresYCodigosCategorias.add(p);
+                }
             }
         } catch (Exception e) {
         }
@@ -197,7 +209,7 @@ public class PlatoDAO {
 
     public List<Plato> listarCategorias() {
         List<Plato> categorias = new ArrayList<>();
-        String sql = "select * from Categoria_plato";
+        String sql = "select * from Categoria_plato where estado = 1";
         PreparedStatement ps;
         ResultSet rs;
         Plato c;
@@ -231,18 +243,32 @@ public class PlatoDAO {
     }
 
     public void addCategoriaPlatos(Plato p) {
-        String sql = "insert into Categoria_plato values (?, ?)";
+        String sql = "insert into Categoria_plato values (?, ?, 1)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, p.getCodCat());
             ps.setString(2, p.getCatNombre());
-            
+
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
 
     public void deleteCategoriaPlatos(int codCat) {
+
+        String sql = "update categoria_plato set estado = 2 where CodCat = ?;";
+        try {//
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, codCat);
+            ps.executeUpdate();
+            sql = "update plato set estado = 'I' where CodCat = ?;";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, codCat);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+
+        /*
         String sql = "delete from plato where CodCat = ?;";
         try {//
             PreparedStatement ps = con.prepareStatement(sql);
@@ -254,6 +280,7 @@ public class PlatoDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
         }
+         */
     }
 
     public void terminarEditarCategoria(String nombreCategoria, int codigoCategoria) {//Modifica solo nombre de categoría

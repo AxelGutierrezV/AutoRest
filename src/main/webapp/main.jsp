@@ -33,7 +33,7 @@
                     <div class="collapse navbar-collapse textoCabecera" id="navbarNavDropdown">
                         <ul class="navbar-nav ">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                                <a class="nav-link active" aria-current="page" href="main.jsp">Inicio</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="Ordenes.jsp">Ordenes</a>
@@ -58,6 +58,8 @@
         </header>
     <center>
         <h1>AQUI VAN ALGUNOS REPORTES<br>PROBABLEMENTE</h1>
+        
+        
     </center>
     </body>
 </html>

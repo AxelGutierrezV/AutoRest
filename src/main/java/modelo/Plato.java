@@ -16,6 +16,7 @@ public class Plato {
     private String imagen;
     private int CodCat;
     private String CatNombre; 
+    private int estadoCategoria;
 
     public Plato(){
         
@@ -81,6 +82,15 @@ public class Plato {
     public void setCatNombre(String CatNombre) {
         this.CatNombre = CatNombre;
     }
+
+    public int getEstadoCategoria() {
+        return estadoCategoria;
+    }
+
+    public void setEstadoCategoria(int estadoCategoria) {
+        this.estadoCategoria = estadoCategoria;
+    }
+    
     
     
 }

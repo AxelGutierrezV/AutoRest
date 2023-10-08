@@ -16,6 +16,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/adminlte.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/boton.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
@@ -36,7 +37,7 @@
                     <div class="collapse navbar-collapse textoCabecera" id="navbarNavDropdown">
                         <ul class="navbar-nav ">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="main.php">Inicio</a>
+                                <a class="nav-link" aria-current="page" href="main.jsp">Inicio</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Ordenes</a>
@@ -52,7 +53,7 @@
                                 </ul>
                             </li>
                         </ul>
-                        <a href="login.php"><button class="btn btn-danger" type="submit">Cerrar Sesion</button></a>
+                        <a href="login.jsp"><button class="btn btn-danger" type="submit">Cerrar Sesion</button></a>
                     </div>
                 </div>
             </nav>
@@ -62,11 +63,10 @@
             EmpleadoDAO obj = new EmpleadoDAO();
         %>
         <div>
-            <a href="SvEmpleados?opc=1">Nuevo Empleado</a>
-            <a href="SvEmpleados?opc=2">Nuevo Perfil</a>
-            <button type="button" class="btn btn-primary btn-sm">Nuevo Empleado</button>
-            <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasAddPerfil" aria-controls="offCanvasAddrPerfil">Nuevo Perfil</button>
+            <a class="basico basicoRedondoTitulo basicoRedondo boton-link-azul" href="SvEmpleados?opc=1">Nuevo Empleado</a>
+            <a class="basico basicoRedondoTitulo basicoRedondo boton-link-azul" href="SvEmpleados?opc=2">Nuevo Perfil</a>
         </div>
+        <br>
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Empleados</button>
@@ -76,11 +76,12 @@
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                 <table class="table table-bordered">
-                    <th>Codigo de Empleado<th>Nombre<th>Estado<th>Cargo 
+                    <th>Codigo de Empleado<th>Nombre<th>Estado<th>Cargo<th>Editar / Eliminar
                         <%
                             for (Empleado e : obj.empleados()) {
                                 out.print("<tr><td>" + e.getCodEmpleado() + "<td>" + e.getNombre() + " " + e.getApellido() + "<td>" + e.estadoNombre() + "<td>" + e.getPerfil() + "<td>");
                         %>
+                        
                         <button class="btn-outline-primary">editar</button>
                         <button class="btn-danger">eliminar</button>
                         <%
@@ -90,12 +91,12 @@
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
                 <table class="table table-bordered">
-                    <tr><th>Codigo<th>Categoria<th> 
+                    <tr><th>Codigo<th>Categoria<th><th style="text-align: center;">Editar<th style="text-align: center;">Delete 
                             <%
                                 for (Empleado p : obj.PerfilesEmpleados()) {
                                     out.print("<tr><td>" + p.getCodPerfil() + "<td>" + p.getPerfil() + "<td>");
                             %>
-                        <td>
+                        <td style="text-align: center;">
                             
                             <form>
                                 <input type="hidden" name="codPerfil" value="<%= p.getCodPerfil()%>">
@@ -103,7 +104,7 @@
                             </form>
                         </td>
 
-                        <td>
+                        <td style="text-align: center;">
                             <a href="SvEmpleados?opc=3&nro=<% out.print(p.getCodPerfil());  %>" class="btn btn-default">delete</a> 
                         </td> 
                         <%

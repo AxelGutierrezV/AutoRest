@@ -26,7 +26,7 @@ public class EmpleadoDAO {
         List<Empleado> empleados = new ArrayList<>();
         Empleado emp;
         try {
-            String sql = "call ListaEmpleados";
+            String sql = "SELECT e.CodEmpleado, e.nombre, e.Apellido, Estado, p.Cargo  FROM empleado e inner join perfil_empleado p on e.CodPerfil = p.CodPerfil where estado = 1";
             PreparedStatement ps = con.prepareCall(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -48,7 +48,7 @@ public class EmpleadoDAO {
         List<Empleado> empleados = new ArrayList<>();
         Empleado emp;
         try {
-            String sql = "select * from perfil_empleado;";
+            String sql = "select * from perfil_empleado where estado = 1;";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -80,9 +80,17 @@ public class EmpleadoDAO {
     }
 
     public void modifyEmpleado() {
+        
     }
 
-    public void deleteEmpleado() {
+    public void deleteEmpleado(int CodEmpleado) {
+        String sql = "update empleado set estado = 2 where CodEmpleado = " + CodEmpleado;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+
     }
 
     public List<Empleado> PerfilesEmpleados() {
@@ -120,7 +128,17 @@ public class EmpleadoDAO {
         return p;
     }
     
-    public void addPerfil() {
+    public void addPerfil(Empleado emp) {
+        try {
+            String sql = "INSERT INTO perfil_empleado VALUES (?, ?);";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, emp.getCodPerfil());
+            ps.setString(2, emp.getPerfil());
+            
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+        }
     }
 
     public void modifyPerfil(String nombrePerfil, int CodPerfil) {

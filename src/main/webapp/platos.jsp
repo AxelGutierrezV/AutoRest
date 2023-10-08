@@ -16,6 +16,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/adminlte.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/boton.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
@@ -36,7 +37,7 @@
                     <div class="collapse navbar-collapse textoCabecera" id="navbarNavDropdown">
                         <ul class="navbar-nav ">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="main.php">Inicio</a>
+                                <a class="nav-link" aria-current="page" href="main.jsp">Inicio</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Ordenes</a>
@@ -52,21 +53,19 @@
                                 </ul>
                             </li>
                         </ul>
-                        <a href="login.php"><button class="btn btn-danger" type="submit">Cerrar Sesion</button></a>
+                        <a href="login.jsp"><button class="btn btn-danger" type="submit">Cerrar Sesion</button></a>
                     </div>
                 </div>
             </nav>
         </header>
         <%
-            PlatoDAO obj = new PlatoDAO();
+              PlatoDAO obj = new PlatoDAO();
         %>
         <div>
-            <a href="SvPlatos?opc=7">Agregar Plato</a>
-            <a href="SvPlatos?opc=9">Agregar Categoria Platos</a>
-
-            <button type="button" class="btn btn-primary btn-sm">Agregar Plato</button>
-            <button type="button" class="btn btn-primary btn-sm">Agregar Categoria</button>
+            <a class="basico basicoRedondoTitulo boton-link-azul" href="SvPlatos?opc=7">Agregar Plato</a>
+            <a class="basico basicoRedondoTitulo boton-link-azul" href="SvPlatos?opc=9">Agregar Categoria Platos</a>
         </div>
+        <br>
         <div>
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -82,8 +81,8 @@
                                 for (Plato p : obj.listaPlatosConCategoria()) {
                                     out.print("<tr><td>" + p.getCodPlato() + "<td>" + p.getNombre() + "<td>" + p.getPrecio() + "<td>" + p.getCatNombre());
                             %>
-                        <td><a href="SvPlatos?opc=4&codigoPlato=<%=p.getCodPlato()%>">Editar</a></td>
-                        <td><a href="SvPlatos?opc=6&codigoPlato=<%=p.getCodPlato()%>">Eliminar</a></td>
+                        <td style="text-align: center;"><a class="basico basicoRedondo boton-link-azul" href="SvPlatos?opc=4&codigoPlato=<%=p.getCodPlato()%>">Editar</a></td>
+                        <td style="text-align: center;"><a class="basico basicoRedondo boton-link-rojo" href="SvPlatos?opc=6&codigoPlato=<%=p.getCodPlato()%>">Eliminar</a></td>
                         <%
                             }
                         %>
@@ -95,8 +94,8 @@
                             <%
                                 for (Plato p : obj.listarCategorias()) {
                                     out.print("<tr><td>" + p.getCodCat() + "<td>" + p.getCatNombre() + "<td>");%>
-                            <a class="btn-outline-primary" href="SvPlatos?opc=1&codigoPlatoCategoria=<%=p.getCodCat()%>">Editar</a>
-                            <a class="btn-danger" href="SvPlatos?opc=2&codigoPlatoCategoria=<%=p.getCodCat()%>">Eliminar</a>
+                            <a style="text-align: center;" class="basico basicoRedondo boton-link-azul" href="SvPlatos?opc=1&codigoPlatoCategoria=<%=p.getCodCat()%>">Editar</a>
+                            <a style="text-align: center;" class="basico basicoRedondo boton-link-rojo" href="SvPlatos?opc=2&codigoPlatoCategoria=<%=p.getCodCat()%>">Eliminar</a>
                             <%
                                 }
                             %>
